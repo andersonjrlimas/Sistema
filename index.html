@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Talentos Escola de Música</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding-bottom: 85px;
+            user-select: none;
+        }
+
+        /* Header */
+        header {
+            padding: 12px 16px;
+            border-bottom: 2px solid #ff5500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #181818;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ff5500;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff5500;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .title-box h1 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .title-box h2 {
+            font-size: 11px;
+            color: #ff5500;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .btn-header-backup {
+            background: #222;
+            border: 1px solid #ff5500;
+            color: #ff5500;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Resumo Financeiro */
+        .finance-card {
+            margin: 12px 15px 8px 15px;
+            padding: 10px 12px;
+            border: 1px solid #ff5500;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Mural de Lembretes - NOVAS CORES (ALTO CONTRASTE) */
+        .top-reminders-container {
+            margin: 0 15px 12px 15px;
+            display: none;
+        }
+
+        .top-reminder-card {
+            background-color: #fff8d6;
+            border: 2px solid #ffd700;
+            border-left: 6px solid #ff9900;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .top-reminder-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #111111;
+        }
+
+        .top-reminder-sub {
+            font-size: 12px;
+            color: #444444;
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .btn-done-reminder {
+            background: #10b981;
+            border: none;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Dias e Lista */
+        .day-header {
+            color: #ff5500;
+            font-size: 16px;
+            font-weight: 800;
+            padding: 12px 15px 6px 15px;
+            border-bottom: 1px solid #ff5500;
+            text-transform: uppercase;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .student-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #262626;
+            background-color: #121212;
+            cursor: pointer;
+        }
+
+        .student-card.faltou {
+            opacity: 0.5;
+            background-color: #1f1414;
+        }
+
+        .student-info { flex: 1; }
+
+        .student-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        .student-details {
+            font-size: 13px;
+            color: #ff5500;
+            font-weight: 600;
+        }
+
+        .tag-experimental {
+            background-color: #ffcc00;
+            color: #000;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 6px;
+            font-weight: bold;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-whatsapp-direct {
+            background-color: #00e640;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp-direct svg {
+            width: 22px;
+            height: 22px;
+            fill: #000;
+        }
+
+        .checkbox-pago {
+            width: 28px;
+            height: 28px;
+            border: 2px solid #555;
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox-pago:checked {
+            background-color: #00e640;
+            border-color: #00e640;
+        }
+
+        .checkbox-pago:checked::after {
+            content: '✓';
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Barra Inferior */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background-color: #000000;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-top: 1px solid #333;
+            gap: 6px;
+            z-index: 100;
+        }
+
+        .btn-bottom {
+            flex: 1;
+            padding: 10px 4px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-add-aluno { background-color: #ff5500; color: #000000; }
+        .btn-anotacoes { background-color: transparent; border-color: #9932cc; color: #d8bfd8; }
+        .btn-msg-gen { background-color: transparent; border-color: #008000; color: #00ff7f; }
+        .btn-novo-mes { background-color: transparent; border-color: #4682b4; color: #87cefa; }
+
+        /* Modais */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-card {
+            background: #1e1e1e;
+            padding: 18px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid #ff5500;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            color: #ff5500;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; color: #bbb; margin-bottom: 4px; }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: #2b2b2b;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .modal-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
+        .btn-full {
+            width: 100%;
+            padding: 11px;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-green-wa { background-color: #00e640; color: #000; }
+        .btn-blue-repo { background-color: #1e90ff; color: #fff; }
+        .btn-purple { background-color: #ba55d3; color: #fff; }
+        .row-buttons { display: flex; gap: 8px; margin-top: 5px; }
+        .btn-danger { background-color: #ff3333; color: #fff; flex: 1; }
+        .btn-secondary { background-color: #444; color: #fff; flex: 1; }
+        .btn-primary { background-color: #ff5500; color: #000; flex: 1; }
+
+        .help-text { font-size: 11px; color: #aaa; line-height: 1.4; margin-top: 6px; }
+
+        /* Item de Lembrete dentro do Modal */
+        .note-item-card {
+            background-color: #fff8d6;
+            color: #111;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            border-left: 4px solid #ff9900;
+        }
+        .note-item-card button {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-brand">
+            <div class="logo-circle">🎼</div>
+            <div class="title-box">
+                <h1>TALENTOS</h1>
+                <h2>ESCOLA DE MÚSICA</h2>
+            </div>
+        </div>
+        <button id="btn-open-backup" class="btn-header-backup">💾 Backup</button>
+    </header>
+
+    <div class="finance-card" id="finance-summary">Recebido: R$ 0 | A Receber: R$ 0</div>
+    <div id="top-reminders" class="top-reminders-container"></div>
+    <div id="students-container"></div>
+
+    <nav class="bottom-nav">
+        <button id="nav-btn-add" class="btn-bottom btn-add-aluno">➕ Aluno</button>
+        <button id="nav-btn-notes" class="btn-bottom btn-anotacoes">✏ Anotações</button>
+        <button id="nav-btn-msg" class="btn-bottom btn-msg-gen">⚙️ Msg</button>
+        <button id="nav-btn-month" class="btn-bottom btn-novo-mes">🗓️ Mês</button>
+    </nav>
+
+    <!-- Modal Adicionar / Editar Aluno -->
+    <div id="modal-student" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title" id="modal-student-title">Editar Aluno</div>
+            <input type="hidden" id="student-id">
+            
+            <div class="form-group">
+                <label>Dia da Semana</label>
+                <select id="student-day" class="form-control">
+                    <option value="SEGUNDA">Segunda</option>
+                    <option value="TERÇA">Terça</option>
+                    <option value="QUARTA">Quarta</option>
+                    <option value="QUINTA">Quinta</option>
+                    <option value="SEXTA">Sexta</option>
+                    <option value="SÁBADO">Sábado</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Horário (Ex: 08:00, 09:00, 14:00)</label>
+                <input type="text" id="student-time" class="form-control" placeholder="10:00">
+            </div>
+
+            <div class="form-group">
+                <label>Nome do Aluno</label>
+                <input type="text" id="student-name" class="form-control" placeholder="Nome completo">
+            </div>
+
+            <div class="form-group">
+                <label>WhatsApp / Celular (com DDD)</label>
+                <input type="tel" id="student-phone" class="form-control" placeholder="22998936800">
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label" style="color: #ff5555; font-weight: bold;">
+                    <input type="checkbox" id="student-faltou"> Marcar como FALTOU
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="student-experimental"> É Aula Experimental?
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Vencimento (Ex: Todo dia 10)</label>
+                <input type="text" id="student-due" class="form-control" placeholder="Todo dia 10">
+            </div>
+
+            <div class="form-group">
+                <label>Valor Mensalidade (R$)</label>
+                <input type="number" id="student-price" class="form-control" placeholder="90">
+            </div>
+
+            <div class="modal-actions">
+                <button id="btn-wa-modal" class="btn-full btn-green-wa">📱 Enviar Lembrete no WhatsApp</button>
+                <button id="btn-repo-modal" class="btn-full btn-blue-repo">🔄 Agendar Reposição de Aula</button>
+                
+                <div class="row-buttons">
+                    <button id="btn-delete-student" class="btn-full btn-danger">Excluir</button>
+                    <button id="btn-cancel-student" class="btn-full btn-secondary">Cancelar</button>
+                    <button id="btn-save-student" class="btn-full btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Anotações -->
+    <div id="modal-notes" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title">✏️ Anotações & Serviços</div>
+            <div class="form-group">
+                <label>Serviço / Lembrete</label>
+                <input type="text" id="note-service" class="form-control" placeholder="Ex: Arrumar violão do Carlos...">
+            </div>
+            <div class="form-group">
+                <label>Aluno (Opcional)</label>
+                <input type="text" id="note-student" class="form-control" placeholder="Nome do aluno">
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Data</label>
+                    <input type="date" id="note-date" class="form-control">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Hora para Avisar</label>
+                    <input type="time" id="note-time" class="form-control">
+                </div>
+            </div>
+            <button id="btn-save-note" class="btn-full btn-purple">+ Salvar Lembrete</button>
+            <div style="margin-top: 15px;">
+                <label style="color: #ff5500; font-weight: bold; display: block; margin-bottom: 8px;">Meus Lembretes:</label>
+                <div id="notes-list-container"></div>
+            </div>
+            <div class="modal-actions">
+                <button id="btn-close-notes" class="btn-full btn-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mensagem WhatsApp -->
+    <div id="modal-msg" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title">Escrever Mensagem do WhatsApp</div>
+            <div class="form-group">
+                <label>Digite a mensagem padrão:</label>
+                <textarea id="custom-msg-template" class="form-control" rows="5" style="resize: none;"></textarea>
+            </div>
+            <div class="help-text">
+                <strong>Códigos automáticos:</strong> {NOME}, {VALOR}, {VENCIMENTO}
+            </div>
+            <div class="row-buttons" style="margin-top: 15px;">
+                <button id="btn-cancel-msg" class="btn-full btn-secondary">Cancelar</button>
+                <button id="btn-save-msg" class="btn-full btn-primary">Salvar Mensagem</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Backup -->
+    <div id="modal-backup" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title">💾 Backup e Segurança</div>
+            <p style="font-size: 12px; color: #ccc; margin-bottom: 12px;">Guarde uma cópia ou restaure seu arquivo de alunos.</p>
+            <div class="modal-actions">
+                <button id="btn-export-bkp" class="btn-full btn-primary">📥 Baixar Backup dos Dados</button>
+                <button id="btn-import-trigger" class="btn-full btn-blue-repo">📤 Restaurar Arquivo de Backup</button>
+                <input type="file" id="file-backup-input" style="display: none;" accept=".json">
+                <button id="btn-close-bkp" class="btn-full btn-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pedir permissão para Notificações do Navegador
+            if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+
+            let students = JSON.parse(localStorage.getItem('talentos_students')) || [
+                { id: 1, day: 'SEGUNDA', time: '10:00', name: 'MARILZA KETSIA.', phone: '22998936800', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 2, day: 'SEGUNDA', time: '11:00', name: 'CARLOS.', phone: '', faltou: false, experimental: false, due: '', price: 0, paid: false },
+                { id: 3, day: 'SEGUNDA', time: '14:00', name: 'LUCAS.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 4, day: 'SEGUNDA', time: '15:00', name: 'JÃO PAULO.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 80, paid: false },
+                { id: 5, day: 'SEGUNDA', time: '16:00', name: 'YASMIN BRAUN.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 6, day: 'SEGUNDA', time: '18:00', name: 'PRISCILA GIL.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 7, day: 'TERÇA', time: '06:00', name: 'ANDREZA PRIMA', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 70, paid: false },
+                { id: 8, day: 'TERÇA', time: '09:00', name: 'AMANDA.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 95, paid: false },
+                { id: 9, day: 'TERÇA', time: '13:00', name: 'RAQUEL CHAVES', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 100, paid: false },
+                { id: 10, day: 'TERÇA', time: '15:00', name: 'LUCAS LUCIANA', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 11, day: 'TERÇA', time: '16:00', name: 'MANOELA PAULO', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 80, paid: false },
+                { id: 12, day: 'TERÇA', time: '17:00', name: 'ROCKSANDRA.', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 90, paid: false },
+                { id: 13, day: 'TERÇA', time: '18:00', name: 'MARCOS OLIVEIRA', phone: '', faltou: false, experimental: false, due: 'Todo dia 10', price: 80, paid: false }
+            ];
+
+            let notes = JSON.parse(localStorage.getItem('talentos_notes')) || [];
+            let waTemplate = localStorage.getItem('talentos_wa_msg') || "Boa noite {NOME}, passando para relembrar sobre o pagamento da sua mensalidade no valor de R$ {VALOR} ({VENCIMENTO}). Qualquer dúvida estou à disposição!";
+            const daysOfWeek = ['SEGUNDA', 'TERÇA', 'QUARTA', 'QUINTA', 'SEXTA', 'SÁBADO'];
+
+            function saveData() {
+                localStorage.setItem('talentos_students', JSON.stringify(students));
+                localStorage.setItem('talentos_notes', JSON.stringify(notes));
+                localStorage.setItem('talentos_wa_msg', waTemplate);
+                renderStudents();
+                renderFinance();
+                renderTopReminders();
+                renderModalNotesList();
+            }
+
+            function renderFinance() {
+                let recebido = 0, aReceber = 0;
+                students.forEach(s => {
+                    const price = parseFloat(s.price) || 0;
+                    if (s.paid) recebido += price;
+                    else aReceber += price;
+                });
+                document.getElementById('finance-summary').innerText = `Recebido: R$ ${recebido} | A Receber: R$ ${aReceber}`;
+            }
+
+            function renderTopReminders() {
+                const container = document.getElementById('top-reminders');
+                container.innerHTML = '';
+                if (notes.length === 0) {
+                    container.style.display = 'none';
+                    return;
+                }
+                container.style.display = 'block';
+
+                notes.forEach((note, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'top-reminder-card';
+                    
+                    let timeInfo = '';
+                    if (note.date) {
+                        const parts = note.date.split('-');
+                        timeInfo += `${parts[2]}/${parts[1]}`;
+                    }
+                    if (note.time) {
+                        timeInfo += ` às ${note.time}`;
+                    }
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="top-reminder-title">${note.service} ${note.student ? '(' + note.student + ')' : ''}</div>
+                            <div class="top-reminder-sub">📅 ${timeInfo || 'Sem data definida'}</div>
+                        </div>
+                        <button class="btn-done-reminder" onclick="concluirNota(${index})">✓ Concluir</button>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            function renderModalNotesList() {
+                const list = document.getElementById('notes-list-container');
+                if(!list) return;
+                list.innerHTML = '';
+                notes.forEach((n, i) => {
+                    const item = document.createElement('div');
+                    item.className = 'note-item-card';
+                    item.innerHTML = `
+                        <div>
+                            <strong>${n.service}</strong> ${n.student ? '- ' + n.student : ''}<br>
+                            <small>📅 ${n.date || 'S/D'} ${n.time ? 'às ' + n.time : ''}</small>
+                        </div>
+                        <button onclick="concluirNota(${i})">X</button>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+
+            window.concluirNota = function(index) {
+                notes.splice(index, 1);
+                saveData();
+            };
+
+            function renderStudents() {
+                const container = document.getElementById('students-container');
+                container.innerHTML = '';
+
+                daysOfWeek.forEach(day => {
+                    const dayStudents = students.filter(s => s.day === day);
+                    if (dayStudents.length > 0) {
+                        const header = document.createElement('div');
+                        header.className = 'day-header';
+                        header.innerText = day;
+                        container.appendChild(header);
+
+                        dayStudents.sort((a, b) => a.time.localeCompare(b.time));
+
+                        dayStudents.forEach(s => {
+                            const card = document.createElement('div');
+                            card.className = `student-card ${s.faltou ? 'faltou' : ''}`;
+                            
+                            const expTag = s.experimental ? '<span class="tag-experimental">EXP</span>' : '';
+                            
+                            card.innerHTML = `
+                                <div class="student-info" onclick="openEditStudent(${s.id})">
+                                    <div class="student-name">${s.name} ${expTag}</div>
+                                    <div class="student-details">${s.time} ${s.due ? '• ' + s.due : ''} ${s.price ? '• R$ ' + s.price : ''}</div>
+                                </div>
+                                <div class="student-actions">
+                                    ${s.phone ? `
+                                        <button class="btn-whatsapp-direct" onclick="directWA('${s.phone}', '${s.name}', '${s.price}', '${s.due}')">
+                                            <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                        </button>
+                                    ` : ''}
+                                    <input type="checkbox" class="checkbox-pago" ${s.paid ? 'checked' : ''} onchange="togglePaid(${s.id})">
+                                </div>
+                            `;
+                            container.appendChild(card);
+                        });
+                    }
+                });
+            }
+
+            window.togglePaid = function(id) {
+                const s = students.find(st => st.id === id);
+                if (s) {
+                    s.paid = !s.paid;
+                    saveData();
+                }
+            };
+
+            window.directWA = function(phone, name, price, due) {
+                let msg = waTemplate.replace('{NOME}', name).replace('{VALOR}', price).replace('{VENCIMENTO}', due);
+                window.open(`https://wa.me/55${phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
+            };
+
+            // Modais
+            const modalStudent = document.getElementById('modal-student');
+            const modalNotes = document.getElementById('modal-notes');
+            const modalMsg = document.getElementById('modal-msg');
+            const modalBackup = document.getElementById('modal-backup');
+
+            document.getElementById('nav-btn-add').onclick = () => {
+                document.getElementById('modal-student-title').innerText = "Adicionar Aluno";
+                document.getElementById('student-id').value = "";
+                document.getElementById('student-name').value = "";
+                document.getElementById('student-time').value = "";
+                document.getElementById('student-phone').value = "";
+                document.getElementById('student-due').value = "Todo dia 10";
+                document.getElementById('student-price').value = "90";
+                document.getElementById('student-faltou').checked = false;
+                document.getElementById('student-experimental').checked = false;
+                modalStudent.style.display = 'flex';
+            };
+
+            window.openEditStudent = function(id) {
+                const s = students.find(st => st.id === id);
+                if (!s) return;
+                document.getElementById('modal-student-title').innerText = "Editar Aluno";
+                document.getElementById('student-id').value = s.id;
+                document.getElementById('student-day').value = s.day;
+                document.getElementById('student-time').value = s.time;
+                document.getElementById('student-name').value = s.name;
+                document.getElementById('student-phone').value = s.phone || '';
+                document.getElementById('student-due').value = s.due || '';
+                document.getElementById('student-price').value = s.price || '';
+                document.getElementById('student-faltou').checked = !!s.faltou;
+                document.getElementById('student-experimental').checked = !!s.experimental;
+                modalStudent.style.display = 'flex';
+            };
+
+            document.getElementById('btn-cancel-student').onclick = () => modalStudent.style.display = 'none';
+
+            document.getElementById('btn-save-student').onclick = () => {
+                const id = document.getElementById('student-id').value;
+                const name = document.getElementById('student-name').value.trim();
+                if (!name) return alert("Digite o nome do aluno!");
+
+                const data = {
+                    day: document.getElementById('student-day').value,
+                    time: document.getElementById('student-time').value,
+                    name: name,
+                    phone: document.getElementById('student-phone').value,
+                    due: document.getElementById('student-due').value,
+                    price: parseFloat(document.getElementById('student-price').value) || 0,
+                    faltou: document.getElementById('student-faltou').checked,
+                    experimental: document.getElementById('student-experimental').checked
+                };
+
+                if (id) {
+                    const idx = students.findIndex(s => s.id == id);
+                    if (idx !== -1) students[idx] = { ...students[idx], ...data };
+                } else {
+                    students.push({ id: Date.now(), paid: false, ...data });
+                }
+
+                saveData();
+                modalStudent.style.display = 'none';
+            };
+
+            document.getElementById('btn-delete-student').onclick = () => {
+                const id = document.getElementById('student-id').value;
+                if (id && confirm("Certeza que deseja excluir este aluno?")) {
+                    students = students.filter(s => s.id != id);
+                    saveData();
+                    modalStudent.style.display = 'none';
+                }
+            };
+
+            // Anotações
+            document.getElementById('nav-btn-notes').onclick = () => {
+                renderModalNotesList();
+                modalNotes.style.display = 'flex';
+            };
+            document.getElementById('btn-close-notes').onclick = () => modalNotes.style.display = 'none';
+
+            document.getElementById('btn-save-note').onclick = () => {
+                const service = document.getElementById('note-service').value.trim();
+                if (!service) return alert("Digite o serviço ou lembrete!");
+                
+                notes.push({
+                    service: service,
+                    student: document.getElementById('note-student').value.trim(),
+                    date: document.getElementById('note-date').value,
+                    time: document.getElementById('note-time').value,
+                    notified: false
+                });
+
+                document.getElementById('note-service').value = '';
+                document.getElementById('note-student').value = '';
+                document.getElementById('note-date').value = '';
+                document.getElementById('note-time').value = '';
+
+                saveData();
+            };
+
+            // Mensagem WA Modal
+            document.getElementById('nav-btn-msg').onclick = () => {
+                document.getElementById('custom-msg-template').value = waTemplate;
+                modalMsg.style.display = 'flex';
+            };
+            document.getElementById('btn-cancel-msg').onclick = () => modalMsg.style.display = 'none';
+            document.getElementById('btn-save-msg').onclick = () => {
+                waTemplate = document.getElementById('custom-msg-template').value;
+                saveData();
+                modalMsg.style.display = 'none';
+            };
+
+            // Novo Mês
+            document.getElementById('nav-btn-month').onclick = () => {
+                if (confirm("Deseja iniciar um novo mês? Isso vai desmarcar todos os pagamentos e faltas dos alunos!")) {
+                    students.forEach(s => {
+                        s.paid = false;
+                        s.faltou = false;
+                    });
+                    saveData();
+                    alert("Novo mês iniciado com sucesso!");
+                }
+            };
+
+            // Backup
+            document.getElementById('btn-open-backup').onclick = () => modalBackup.style.display = 'flex';
+            document.getElementById('btn-close-bkp').onclick = () => modalBackup.style.display = 'none';
+
+            document.getElementById('btn-export-bkp').onclick = () => {
+                const data = JSON.stringify({ students, notes, waTemplate }, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `backup_talentos_${new Date().toISOString().slice(0,10)}.json`;
+                a.click();
+            };
+
+            document.getElementById('btn-import-trigger').onclick = () => document.getElementById('file-backup-input').click();
+
+            document.getElementById('file-backup-input').onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const imported = JSON.parse(event.target.result);
+                        if (imported.students) students = imported.students;
+                        if (imported.notes) notes = imported.notes;
+                        if (imported.waTemplate) waTemplate = imported.waTemplate;
+                        saveData();
+                        alert("Backup restaurado com sucesso!");
+                        modalBackup.style.display = 'none';
+                    } catch (err) {
+                        alert("Arquivo de backup inválido!");
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            // ==========================================
+            // SISTEMA DE ALARME E BIP SONORO (30 MIN ANTES)
+            // ==========================================
+            function playBipSound() {
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, ctx.currentTime); // Tom Bip
+                    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start();
+                    // Faz 3 Bips curtos
+                    setTimeout(() => { osc.frequency.setValueAtTime(1100, ctx.currentTime); }, 150);
+                    setTimeout(() => { osc.frequency.setValueAtTime(880, ctx.currentTime); }, 300);
+                    setTimeout(() => { osc.stop(); ctx.close(); }, 500);
+                } catch(e) {
+                    console.log("AudioContext não permitido sem interação do usuário.");
+                }
+            }
+
+            function checkReminders() {
+                const now = new Date();
+                const currentDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+                const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+                notes.forEach(note => {
+                    if (note.date && note.time && !note.notified) {
+                        if (note.date === currentDate) {
+                            const [h, m] = note.time.split(':').map(Number);
+                            const noteMinutes = h * 60 + m;
+                            const diff = noteMinutes - currentMinutes;
+
+                            // Toca bip e notifica quando estiver entre 0 e 30 minutos antes do horário
+                            if (diff <= 30 && diff >= 0) {
+                                note.notified = true;
+                                saveData();
+
+                                // Executa o Bip
+                                playBipSound();
+
+                                // Exibe Notificação do Navegador
+                                if ("Notification" in window && Notification.permission === "granted") {
+                                    new Notification("🔔 Lembrete Talentos Escola de Música", {
+                                        body: `${note.service} ${note.student ? '(' + note.student + ')' : ''} em aproximadamente ${diff} minutos!`,
+                                        icon: '🎼'
+                                    });
+                                } else {
+                                    alert(`🔔 LEMBRETE (em ${diff} min):\n\n${note.service} ${note.student ? '(' + note.student + ')' : ''}`);
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Checa a cada 30 segundos se tem algum lembrete próximo
+            setInterval(checkReminders, 30000);
+
+            // Inicialização
+            saveData();
+        });
+    </script>
+</body>
+</html>
